@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>MSE 201 • 100 QUIZ • carousel navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>MSE 201 · 100 · mobile slide</title>
     <style>
         * {
             box-sizing: border-box;
@@ -11,559 +12,575 @@
             padding: 0;
         }
         body {
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #eef2f6;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            padding: 0.8rem;
+            line-height: 1.5;
         }
         .quiz-container {
-            width: 100%;
-            max-width: 1300px;
+            max-width: 950px;
             margin: 0 auto;
             background: white;
-            border-radius: 40px;
-            box-shadow: 0 25px 45px -18px #1e293b;
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem 2rem 2rem 2rem;
-        }
-        /* header line: title + timer row */
-        .top-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem 0.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -8px rgba(0,20,40,0.25);
+            overflow: hidden;
+            padding: 1.5rem 1rem;
         }
         h1 {
             font-size: 1.9rem;
-            font-weight: 700;
-            background: linear-gradient(145deg, #0f2b4b, #1e4b7a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-        h1 span {
-            background: #e6edf5;
-            padding: 0.2rem 1rem;
-            border-radius: 60px;
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #1e405e;
-            margin-left: 1rem;
-            -webkit-text-fill-color: #1e405e;
-        }
-        .timer-card {
-            background: #0b1f33;
-            color: white;
-            padding: 0.4rem 2rem 0.4rem 1.8rem;
-            border-radius: 60px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            font-weight: 600;
-            box-shadow: 0 10px 12px -8px #020617;
+            gap: 8px;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.5rem;
+            color: #0c4a6e;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #475569;
+            margin-left: auto;
+            background: #e2e8f0;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+        }
+        .timer-panel {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            color: white;
+            padding: 1rem 1.2rem;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         .timer-box {
-            background: #020c1a;
-            padding: 0.5rem 1.5rem;
-            border-radius: 40px;
-            font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 2.2rem;
-            font-weight: 600;
-            color: #fbbf24;
+            background: #020617;
+            padding: 0.4rem 1.5rem;
+            border-radius: 60px;
+            font-size: 2rem;
+            font-family: 'Courier New', monospace;
             letter-spacing: 4px;
+            color: #fcd34d;
+            box-shadow: 0 0 0 2px #64748b;
         }
-        .answered-badge {
-            background: #2d3f5e;
-            border-radius: 30px;
-            padding: 0.5rem 1.2rem;
+        .question-track {
             font-size: 1.2rem;
+            background: #2563eb;
+            padding: 0.4rem 1.3rem;
+            border-radius: 40px;
         }
-
-        /* main panel: question above, carousel below */
-        .question-area {
-            background: #f6faff;
-            border-radius: 36px;
-            padding: 2rem 1.8rem;
-            margin: 1rem 0 1.5rem 0;
-            box-shadow: inset 0 1px 6px #cdd9ed, 0 6px 12px -8px #64748b;
+        .question-card {
+            background: #f8fafc;
+            border-radius: 40px;
+            padding: 1.8rem 1.5rem;
+            margin: 1.5rem 0 1.2rem;
+            box-shadow: inset 0 1px 4px #cbd5e1, 0 8px 12px -8px #94a3b8;
         }
-        /* carousel wrapper with arrows */
-        .carousel-wrapper {
+        .q-text {
+            font-size: 1.4rem;
+            font-weight: 550;
+            margin-bottom: 1.8rem;
+            line-height: 1.4;
+        }
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .option {
+            background: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 100px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.15rem;
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: #f1f5f9;
+            cursor: pointer;
+            transition: 0.15s ease;
+            word-break: break-word;
+        }
+        .option:hover {
+            background: #eef2ff;
+            border-color: #3b82f6;
+        }
+        .option.selected {
+            background: #2563eb;
+            border-color: #1e3a8a;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 6px 10px -3px #1e40af;
+        }
+        .option-letter {
+            font-weight: 700;
+            width: 2.5rem;
+            display: inline-block;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 1.2rem 0 1rem;
+        }
+        button {
+            background: white;
+            border: 2px solid #2563eb;
+            color: #2563eb;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 0.7rem 1.2rem;
             border-radius: 60px;
-            padding: 0.5rem 0.8rem;
-            margin-top: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex: 1 1 auto;
+            min-width: 105px;
+        }
+        button.primary {
+            background: #2563eb;
+            color: white;
+            border: 2px solid #2563eb;
+        }
+        button:active { transform: scale(0.96); }
+        button:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        /* progress carousel style – like an arrow edge, curved */
+        .progress-carousel {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 2rem 0 0.8rem;
         }
         .carousel-arrow {
-            background: white;
-            border: 2px solid #2e5396;
-            color: #1e3f66;
-            width: 48px;
-            height: 48px;
+            background: #2563eb;
+            color: white;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            font-weight: 600;
+            font-weight: 400;
             cursor: pointer;
+            box-shadow: 0 4px 8px #94a3b8;
             transition: 0.15s;
             flex-shrink: 0;
             user-select: none;
+            line-height: 1;
         }
-        .carousel-arrow:active {
-            background: #2563eb;
-            color: white;
-            border-color: #0f2d51;
-        }
+        .carousel-arrow:active { transform: scale(0.9); background: #1e3a8a; }
         .carousel-arrow.disabled {
-            opacity: 0.25;
+            opacity: 0.3;
             pointer-events: none;
+            background: #64748b;
         }
-        .badge-carousel {
-            flex: 1;
+        .badge-scroll {
+            display: flex;
             overflow-x: auto;
-            scrollbar-width: thin;
-            white-space: nowrap;
-            padding: 6px 0;
+            gap: 8px;
+            padding: 8px 4px;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            flex: 1;
         }
-        .badge-carousel::-webkit-scrollbar {
-            height: 6px;
-            background: #d1dbe8;
+        .badge-scroll::-webkit-scrollbar {
+            height: 5px;
+        }
+        .badge-scroll::-webkit-scrollbar-thumb {
+            background: #2563eb;
             border-radius: 10px;
-        }
-        .badge-carousel::-webkit-scrollbar-thumb {
-            background: #5f7ea0;
-            border-radius: 10px;
-        }
-        .progress-grid {
-            display: inline-flex;
-            gap: 0.6rem;
-            padding: 0 4px;
         }
         .q-badge {
-            width: 48px;
-            height: 48px;
-            border-radius: 30px;
-            background: white;
-            border: 2px solid #b9c7da;
+            min-width: 44px;
+            height: 44px;
+            border-radius: 44px;
+            background: #e2e8f0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #1e293b;
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: 0.1s ease;
+            transition: 0.1s;
+            border: 2px solid transparent;
             flex-shrink: 0;
         }
         .q-badge.active {
-            background: #1e3e6e;
-            border-color: #fbbf24;
+            background: #1e293b;
             color: white;
+            border-color: #2563eb;
             transform: scale(1.05);
-            box-shadow: 0 4px 8px #1e3a8a55;
         }
         .q-badge.answered {
-            background: #bae6b0;
-            border-color: #15803d;
+            background: #4ade80;
             color: #14532d;
+            border-color: #166534;
         }
-        /* question text and options */
-        .q-text {
-            font-size: 1.55rem;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 2rem;
-            color: #0c2942;
-        }
-        .options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-        }
-        .option {
-            background: white;
-            border: 2px solid #cfddee;
-            border-radius: 60px;
-            padding: 1rem 1.8rem;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            transition: 0.15s;
-            font-weight: 500;
-        }
-        .option:hover {
-            background: #dfebf9;
-            border-color: #2f68b0;
-        }
-        .option.selected {
-            background: #2563eb;
-            border-color: #1a3f7a;
-            color: white;
-            box-shadow: 0 6px 12px -4px #1e3a8a;
-        }
-        .option-letter {
-            font-weight: 700;
-            width: 2.5rem;
-            font-size: 1.3rem;
-        }
-        /* nav row */
-        .nav-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin: 1.2rem 0 0.2rem;
-        }
-        button {
-            background: white;
-            border: 2px solid #2e5396;
-            color: #1e3f66;
-            font-size: 1.2rem;
-            font-weight: 600;
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            min-width: 130px;
-            justify-content: center;
-        }
-        button.primary {
-            background: #1f4a8a;
-            border-color: #0f2d51;
-            color: white;
-        }
-        button:active { transform: scale(0.96); }
-        button:disabled { opacity: 0.3; pointer-events: none; }
-
-        /* summary screen */
         .summary-screen {
-            background: #f8fafc;
-            border-radius: 36px;
-            padding: 2rem;
+            background: #f1f5f9;
+            border-radius: 40px;
+            padding: 2rem 1rem;
+            text-align: center;
         }
         .score-circle {
-            width: 170px; height: 170px;
-            background: #2563eb; color: white;
-            font-size: 3.2rem; font-weight: 700;
+            width: 160px;
+            height: 160px;
+            margin: 1.2rem auto;
+            background: #2563eb;
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0.5rem auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 30px -10px #1e3a8a;
         }
         .review-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px,1fr));
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             gap: 8px;
+            margin-top: 1.8rem;
         }
         .review-item {
-            background: white; border-left: 6px solid #2563eb; padding: 0.5rem;
-            border-radius: 18px;
+            background: white;
+            border-radius: 20px;
+            padding: 0.6rem 0.2rem;
+            font-size: 0.85rem;
+            border-left: 5px solid #2563eb;
         }
-
-        @media (max-width: 700px) {
-            .quiz-container { padding: 1rem; }
-            .timer-box { font-size: 1.5rem; padding: 0.4rem 1rem; }
-            .q-text { font-size: 1.3rem; }
-            .option { font-size: 1rem; padding: 0.8rem 1rem; }
-            .carousel-arrow { width: 40px; height: 40px; font-size: 1.6rem; }
-            .q-badge { width: 42px; height: 42px; }
+        .footer-info {
+            margin-top: 1.5rem;
+            color: #475569;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
-        @media (max-width: 500px) {
-            .top-header { flex-direction: column; align-items: stretch; }
-            .timer-card { justify-content: space-between; }
-            .nav-row { flex-wrap: wrap; }
-            button { flex: 1; min-width: 90px; font-size: 1rem; padding: 0.6rem 0.2rem; }
+        @media (max-width: 600px) {
+            .quiz-container { padding: 0.8rem; }
+            .timer-box { font-size: 1.6rem; letter-spacing: 2px; }
+            .q-text { font-size: 1.25rem; }
+            .option { font-size: 1rem; padding: 0.7rem 1rem; }
+            button { font-size: 1rem; padding: 0.6rem 0.5rem; }
+            .carousel-arrow { width: 40px; height: 40px; font-size: 1.8rem; }
+            .q-badge { min-width: 40px; height: 40px; }
         }
     </style>
 </head>
 <body>
 <div class="quiz-container" id="quizContainer">
-    <!-- header with title and timer inline -->
-    <div class="top-header">
-        <h1>⚙️ MSE 201 <span>100 questions</span></h1>
-        <div class="timer-card">
-            <span class="answered-badge" id="qCounter">Q1/100</span>
-            <span class="timer-box" id="timerDisplay">45:00</span>
-        </div>
+    <h1>
+        ⚙️ MSE 201 · Joining & Properties
+        <small>100 questions</small>
+    </h1>
+
+    <!-- timer & status -->
+    <div class="timer-panel">
+        <span class="question-track" id="qCounter">Q 1 / 100</span>
+        <span class="timer-box" id="timerDisplay">45:00</span>
     </div>
 
-    <!-- question panel -->
-    <div class="question-area" id="questionArea"></div>
+    <!-- dynamic main card -->
+    <div id="questionArea"></div>
 
-    <!-- horizontal carousel with left/right arrows -->
-    <div class="carousel-wrapper">
-        <div class="carousel-arrow" id="carouselLeft">←</div>
-        <div class="badge-carousel" id="badgeCarousel">
-            <div class="progress-grid" id="progressBadges"></div>
-        </div>
-        <div class="carousel-arrow" id="carouselRight">→</div>
-    </div>
-
-    <!-- navigation buttons -->
-    <div class="nav-row" id="navButtons">
+    <!-- navigation buttons (prev/next/submit) -->
+    <div class="nav-buttons" id="navButtons">
         <button id="prevBtn" disabled>◀ Prev</button>
         <button id="nextBtn" class="primary">Next ▶</button>
-        <button id="submitBtn" style="background:#0f7338; border-color:#0b4f2d; color:white;">✔ Submit</button>
+        <button id="submitBtn" class="primary" style="background:#059669; border-color:#047857;">✔ Submit</button>
+    </div>
+
+    <!-- curved carousel with arrow edges (exactly as requested: numbers move like arrow by the edge) -->
+    <div class="progress-carousel" id="progressCarousel">
+        <div class="carousel-arrow" id="scrollLeftArrow" title="previous batch">‹</div>
+        <div class="badge-scroll" id="badgeScrollContainer">
+            <!-- badges injected dynamically via js -->
+        </div>
+        <div class="carousel-arrow" id="scrollRightArrow" title="next batch">›</div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer-info">
+        <span>✔ answered • <span id="answeredCount">0</span>/100</span>
+        <span>⏱️ 45 min • ⏺️ 100 questions</span>
     </div>
 </div>
 
 <script>
 (function() {
-    // ----- 100 questions (your full set) -----
+    // ----- 100 questions (exactly same as before, preserved) -----
     const questions = [
-        { q: "Which of the following is not an example of a planar defect?", opts: ["Grain boundary","Stacking fault","Twin boundary","Bulk defect","None of above"], ans: 3 },
-        { q: "Vacancy concentration in copper at 1080°C (approx)?", opts: ["4.85×10⁻⁴","2.12×10⁻⁴","7.82×10⁻⁴","3.97×10⁻³","none"], ans: 1 },
-        { q: "A cation-anion vacancy pair in an ionic crystal is called?", opts: ["Frenkel defect","Schottky defect","Divacancy","ionic imperfection","stacking fault"], ans: 1 },
-        { q: "Dislocation with burger's vector perpendicular to line?", opts: ["Edge dislocation","screw dislocation","sessile dislocation","dislocation climb","none"], ans: 0 },
-        { q: "Process that adds both carbon and nitrogen?", opts: ["Carbonitriding","Nitriding","Ionitriding","Carburizing","Boronizing"], ans: 0 },
-        { q: "Fine grains improve strength due to?", opts: ["more grain boundaries that obstruct dislocation movement","crystals that cannot move","hardness of grains","dissolution of grains","none"], ans: 0 },
-        { q: "Heat treatment is NOT undertaken for?", opts: ["Improve properties","Refine grain size","Increase degradation rate","Alter microstructure","Modify surface chemistry"], ans: 2 },
-        { q: "Why alloying elements added?", opts: ["To improve properties","To turn it crystalline","Increase volume/weight","All of above","None"], ans: 0 },
-        { q: "Rules for extensive solid solution?", opts: ["Lever rule","Hume-Rothery rule","Phase Rule","Gibb's Rule","None"], ans: 1 },
-        { q: "DOF when FCC and BCC iron coexist?", opts: ["2","1","0","-1","-2"], ans: 1 },
-        { q: "Strengthening mechanisms include?", opts: ["Grain size strengthening","Solid solution strengthening","Strain hardening","All of the above","None"], ans: 3 },
-        { q: "Dislocation movement responsible for?", opts: ["Plastic deformation and strengthening","Conductivity","Intrinsic conduction","Paramagnetism","None"], ans: 0 },
-        { q: "Miller indices for HCP intercepts 1,∞,1?", opts: ["(100)","(010)","(101)","(001)","none"], ans: 2 },
-        { q: "Crystal system a≠b≠c, α=β=γ=90°?", opts: ["Orthorhombic","Cubic","Tetragonal","Hexagonal","Rhombohedral"], ans: 0 },
-        { q: "Size of densest plane in fcc (a=lattice parameter)?", opts: ["a/2","a/√2","a√2","a√3","none"], ans: 2 },
-        { q: "Bond type in LiF and SiC?", opts: ["Ionic & ionic","covalent & covalent","Covalent & ionic","ionic & Covalent","van der Waals"], ans: 3 },
-        { q: "Atomic radius of Cu (FCC, at mass 63.5, density 8.96)?", opts: ["0.128 nm","0.256 nm","0.362 nm","0.052 nm","0.427 nm"], ans: 0 },
-        { q: "Which bond is directional?", opts: ["metallic","ionic","covalent","hydrogen","none"], ans: 2 },
-        { q: "Structure‑insensitive property?", opts: ["Tensile strength","Hardness","Yield strength","refractive index","Young modulus"], ans: 3 },
-        { q: "All true EXCEPT?", opts: ["All primitive cells are unit cells","All unit cells not primitive","FCC and HCP same APF","HCP atoms = thrice FCC","none"], ans: 3 },
-        { q: "Creep is significant at?", opts: ["room temp","melting temp","cryogenic","elevated temperature","isothermal"], ans: 3 },
-        { q: "TS from HB=300 (approx)?", opts: ["1035 MPa","735 MPa","435 MPa","2235 MPa","2050 MPa"], ans: 0 },
-        { q: "Concrete is a?", opts: ["polymer-matrix composite","ceramic-matrix composite","metal-matrix composite","all","none"], ans: 1 },
-        { q: "Thermal shock pronounced with —— stress?", opts: ["Torsional","Compressive","Tensile","Cyclic","Bending"], ans: 2 },
-        { q: "Glass is considered?", opts: ["liquid","solid","viscous","super cooled liquid","polymorphic"], ans: 3 },
-        { q: "Glass structure?", opts: ["base-centred","crystal","amorphous","polymorphic","all"], ans: 2 },
-        { q: "High melting carbides due to —— strength", opts: ["bond","tensile","flexural","creep","yield"], ans: 0 },
-        { q: "Major undesirable wood property?", opts: ["shrinkage","thermal expansion","hygroscopic nature","stress-strain","none"], ans: 2 },
-        { q: "Impact strength indexes?", opts: ["toughness","tensile strength","fatigue strength","cold workability","none"], ans: 0 },
-        { q: "Same elastic properties in all directions?", opts: ["homogeneous","inelastic","isotropic","isentropic","visco-elastic"], ans: 2 },
-        { q: "Ceramic stress‑strain curve?", opts: ["Curve A (ductile)","Curve B (steep,short)","Curve C (elastomer)","Curve D","Cannot"], ans: 1 },
-        { q: "NOT required for biomaterials?", opts: ["Biocompatibility","Bioinertness","Toxicity","Bioactiveness","Non‑inflammable"], ans: 2 },
-        { q: "Seasoning imparts all but one?", opts: ["Hardness","Toughness","Stiffness","Strength","All of the above"], ans: 4 },
-        { q: "Not an artificial seasoning method?", opts: ["Boiling","Air seasoning","Water seasoning","Chemical seasoning","None"], ans: 1 },
-        { q: "Intrinsic Si n = ? (σ=4e-4, μe=0.14, μh=0.05)", opts: ["1.32×10¹⁶ m⁻³","2.5×10¹⁶","1.0×10¹⁶","8×10¹⁵","none"], ans: 0 },
-        { q: "Fatigue strength is the —— stress for no failure within N cycles", opts: ["minimum","maximum","minimum strain","maximum strain","parallel strain"], ans: 1 },
-        { q: "Basic properties define technology capabilities?", opts: ["Not exactly","Not sure","False","True"], ans: 3 },
-        { q: "Moisture content of timber – false statement?", opts: ["20x20x20 mm sample","last two weights identical","weighed fresh","last two differ by 0.1%","none"], ans: 3 },
-        { q: "Slip system = ?", opts: ["densest plane & least dense dir","densest plane & denser dir","densest dir & less dense plane","densest plane & densest dir","none"], ans: 3 },
-        { q: "Wood orthotropic means?", opts: ["wide in tropics","orthopaedic use","orthorhombic crystal","unique properties in 3 orthogonal directions"], ans: 3 },
-        { q: "Cu not used for HT lines due to?", opts: ["low cost","high ductility","density","toxicity","none"], ans: 2 },
-        { q: "Increasing resistivity order?", opts: ["metallic > covalent > ionic","metallic < covalent < ionic","ionic < covalent < metallic","covalent > ionic > metallic","none"], ans: 1 },
-        { q: "NOT factor affecting electron mobility?", opts: ["thermal agitation","crystal imperfections","crystal structure","degree cold work","all of the above"], ans: 4 },
-        { q: "Eutectoid temperature in Fe‑C?", opts: ["1147°C","1492°C","723°C","910°C","1539°C"], ans: 2 },
-        { q: "Adds C and N into steel surface?", opts: ["Carburizing","Nitriding","Carbonitriding","Cyaniding","Boriding"], ans: 2 },
-        { q: "Ionized gas plasma hardening?", opts: ["flame hardening","induction hardening","plasma nitriding","laser hardening","TD process"], ans: 2 },
-        { q: "Main purpose of tempering?", opts: ["increase hardness","relieve stresses & restore toughness","refine grain","decarburize","spheroidize"], ans: 1 },
-        { q: "Viscosity near softening point of glass (poise)?", opts: ["10⁴","10⁷·6","10¹³","10²","10⁻²"], ans: 2 },
-        { q: "Optimal wetting angle α for adhesive?", opts: ["< 10°","< 30°","> 90°","= 60°","any"], ans: 1 },
-        { q: "Filler melting <450°C?", opts: ["brazing","soldering","welding","adhesive","riveting"], ans: 1 },
-        { q: "Recalescence cause?", opts: ["latent heat γ→α","oxidation","decarburization","grain growth","cracking"], ans: 0 },
-        { q: "Full annealing temp for hypoeutectoid steel?", opts: ["Ac₁+30‑50","Ac₃+30‑50","Acm+30‑50","below Ac₁","any"], ans: 1 },
-        { q: "Martensite structure?", opts: ["BCT hard","FCC soft","BCC ductile","HCP brittle","amorphous"], ans: 0 },
-        { q: "Spheroidized structure?", opts: ["lamellar pearlite","spherical carbides in ferrite","acicular ferrite","bainite","ledeburite"], ans: 1 },
-        { q: "High thermal shock resistance needs?", opts: ["low k","high expansion","low σf","low Young’s modulus","high brittleness"], ans: 3 },
-        { q: "Bioinert ceramic?", opts: ["hydroxyapatite","alumina","tricalcium phosphate","bioglass","collagen"], ans: 1 },
-        { q: "SCC requires?", opts: ["tensile stress + corrosive","compression only","static load","vacuum","high temp only"], ans: 0 },
-        { q: "Charge carriers in conductive polymers?", opts: ["electrons","holes","polarons/bipolarons","ions","protons"], ans: 2 },
-        { q: "Temporary joining process?", opts: ["riveting","welding","brazing","soldering","fusion welding"], ans: 0 },
-        { q: "Most widely used carburizing today?", opts: ["pack","liquid","gas","vacuum","ion"], ans: 2 },
-        { q: "Sintering does what?", opts: ["compacts","bonds particles by diffusion","melts","removes lubricant","coats"], ans: 1 },
-        { q: "TIG electrode?", opts: ["consumable steel","non-consumable tungsten","copper","graphite","aluminum"], ans: 1 },
-        { q: "Boride layer hardness (HV)?", opts: ["300","700","1500‑2100","4000","<200"], ans: 2 },
-        { q: "Thermoplastic example?", opts: ["phenolic","epoxy","polyethylene","polyurethane (thermoset)","melamine"], ans: 2 },
-        { q: "Ceramics fail by?", opts: ["ductile","brittle fracture","fatigue","creep at RT","yielding"], ans: 1 },
-        { q: "Poisson's ratio metals typical?", opts: ["0.1‑0.2","0.25‑0.35","0.45‑0.5","0.5‑0.7","negative"], ans: 1 },
-        { q: "APF of BCC?", opts: ["0.74","0.68","0.52","0.38","0.86"], ans: 1 },
-        { q: "Fick's first law deals with?", opts: ["steady-state diffusion","non-steady","thermal conduction","viscosity","electrical mobility"], ans: 0 },
-        { q: "Not a ceramic?", opts: ["Al₂O₃","SiC","ZrO₂","PMMA","Si₃N₄"], ans: 3 },
-        { q: "Ion nitriding = ?", opts: ["gas nitriding","plasma nitriding","salt bath nitriding","cyaniding","carbonitriding"], ans: 1 },
-        { q: "Main alloy in duralumin?", opts: ["zinc","copper","magnesium","silicon","manganese"], ans: 1 },
-        { q: "Most structure‑sensitive property?", opts: ["yield strength","elastic modulus","density","melting point","expansion"], ans: 0 },
-        { q: "High dielectric constant used in?", opts: ["capacitors","resistors","inductors","transistors","superconductors"], ans: 0 },
-        { q: "TD process diffuses ?", opts: ["carbon","nitrogen","vanadium/niobium","chromium","boron"], ans: 2 },
-        { q: "Copper/gold color because?", opts: ["absorb UV","reflectivity varies with λ","semiconductors","thin oxide","alloy"], ans: 1 },
-        { q: "Defect characteristic of ionic crystals?", opts: ["Schottky defect","vacancy cluster","interstitial loop","screw dislocation","edge"], ans: 0 },
-        { q: "Cross-linked polymer?", opts: ["thermoplastic","thermoset","elastomer always","crystalline","amorphous thermoplastic"], ans: 1 },
-        { q: "Tempering 150‑200°C produces?", opts: ["tempered martensite (ε‑carbide)","spheroidite","pearlite","bainite","retained austenite"], ans: 0 },
-        { q: "Major Portland cement component?", opts: ["tricalcium silicate","dicalcium silicate","tricalcium aluminate","gypsum","ferrite"], ans: 0 },
-        { q: "Main function of aggregate?", opts: ["binding","filler & strength","react with cement","color","waterproof"], ans: 1 },
-        { q: "Hygroscopic wood means?", opts: ["absorbs/desorbs moisture","burns","resists fungi","high density","sinks"], ans: 0 },
-        { q: "Not a welding term?", opts: ["crater","toe","fillet","bead","machining allowance"], ans: 4 },
-        { q: "Brazing filler melts?", opts: ["<450°C",">450°C < base Tm","> base Tm","same as base",">1000°C"], ans: 1 },
-        { q: "Galvanic corrosion needs?", opts: ["two dissimilar metals in electrolyte","stress+corrosion","uniform oxidation","cavitation","hydrogen"], ans: 0 },
-        { q: "First ceramic superconductors?", opts: ["YBCO","NbO and NbN","BSCCO","MgB₂","LSCO"], ans: 1 },
-        { q: "Elastic region slope = ?", opts: ["yield strength","tensile strength","Young's modulus","toughness","resilience"], ans: 2 },
-        { q: "Highest thermal conductivity?", opts: ["silver","copper","diamond","aluminum","graphene"], ans: 2 },
-        { q: "Metal reflection main cause?", opts: ["re-emission of absorbed photons","band gap","roughness","plasma frequency","impurities"], ans: 0 },
-        { q: "Endurance limit definition?", opts: ["stress below no failure","max stress","strain limit","cycles to failure","none"], ans: 0 },
-        { q: "Soft ferrite example?", opts: ["barium ferrite","magnetite","manganese‑zinc ferrite","strontium ferrite","lodestone"], ans: 2 },
-        { q: "Cohesion failure occurs in?", opts: ["adhesive layer","interface","adherent","oxide layer","primer"], ans: 0 },
-        { q: "'Spelter' used in?", opts: ["brazing","soldering","welding","adhesive","riveting"], ans: 0 },
-        { q: "HAZ definition?", opts: ["region with altered microstructure","molten pool","weld bead","fusion zone","crater"], ans: 0 },
-        { q: "Glass network former?", opts: ["Na₂O","CaO","SiO₂","MgO","K₂O"], ans: 2 },
-        { q: "Normalizing main purpose?", opts: ["softening","grain refinement","surface hardening","decarburization","spheroidization"], ans: 1 },
-        { q: "High Q means low?", opts: ["internal friction","stiffness","density","strength","melting point"], ans: 0 },
-        { q: "Common ceramic test due to brittleness?", opts: ["tensile","bend test","torsion","impact","creep"], ans: 1 },
-        { q: "Slip system in FCC?", opts: ["{111}<110>","{110}<111>","{100}<110>","{111}<112>","none"], ans: 0 },
-        { q: "Solid solution hardening due to?", opts: ["lattice strain from solute","precipitates","grain boundaries","dislocation density","texture"], ans: 0 },
-        { q: "Joining with non‑metallic hardener?", opts: ["rivet","screw","adhesive bonding","brazing","welding"], ans: 2 },
+        { q: "Which of the following is not an example of a planar defect?", opts: ["Grain boundary", "Stacking fault", "Twin boundary", "Bulk defect", "None of above"], ans: 3 },
+        { q: "A piece of copper crystal is heated from room temperature. Calculate the concentration of vacancies at 1080°C? (energy 0.9eV, k=8.62×10⁻⁵ eV/K, approximate)", opts: ["4.85×10⁻⁴", "2.12×10⁻⁴", "7.82×10⁻⁴", "3.97×10⁻³", "none of the above"], ans: 1 },
+        { q: "A cation-anion vacancy pair in an ionic crystal is called?", opts: ["Frenkel defect", "Schottky defect", "Divacancy", "ionic imperfection", "stacking fault"], ans: 1 },
+        { q: "A dislocation whose burger's vector is perpendicular to its dislocation line is called?", opts: ["Edge dislocation", "screw dislocation", "sessile dislocation", "dislocation climb", "none of the above"], ans: 0 },
+        { q: "______ is the process of subjecting a metal to carbon and nitrogen at high temperatures in presence of carbon- and nitrogen-rich gases or liquids", opts: ["Carbonitriding", "Nitriding", "Ionitriding", "Carburizing", "Boronizing"], ans: 0 },
+        { q: "A metal with fine grains has an improved strength due to...?", opts: ["more grain boundaries that obstruct dislocation movement", "crystals (grains) that cannot move", "hardness of the grains", "dissolution of the grains", "none of the above"], ans: 0 },
+        { q: "Heat treatment may be undertaken for the following purposes except:", opts: ["Improve the properties", "Refine grain size", "Increase the degradation rate", "Alter the microstructure", "Modify surface chemistry"], ans: 2 },
+        { q: "Why are other elements added to a metal to form an alloy?", opts: ["To improve its properties", "To turn it to a crystalline solid", "To increase its volume and weight", "All of the above", "None of the above"], ans: 0 },
+        { q: "The set of rules used to determine the probability of two metals forming extensive solid solution is:", opts: ["Lever rule", "Hume-Rothery rule", "Phase Rule", "Gibb's Rule", "None of the above"], ans: 1 },
+        { q: "The degree of freedom, when FCC iron and BCC iron co-exist in equilibrium, are:", opts: ["2", "1", "0", "-1", "-2"], ans: 1 },
+        { q: "Materials strengthening mechanisms include the following:", opts: ["Grain size strengthening", "Solid solution strengthening", "Strain hardening", "All of the above", "None of the above"], ans: 3 },
+        { q: "The movement and stoppage of dislocation in a metal lattice is responsible for their:", opts: ["Plastic deformation and strengthening", "Conductivity and resistivity", "Intrinsic and extrinsic conduction", "Paramagnetic features", "None of the above"], ans: 0 },
+        { q: "The intercepts on the x,y,z axes of an HCP lattice are 1,∞,1. What is the Miller notation of the plane?", opts: ["(100)", "(010)", "(101)", "(001)", "none"], ans: 2 },
+        { q: "Which of the crystal systems has axial relations a≠b≠c and angles α=β=γ=90°?", opts: ["Orthorhombic", "Cubic", "Tetragonal", "Hexagonal", "Rhombohedral"], ans: 0 },
+        { q: "If 'a' is the lattice parameter of an fcc lattice, then the size of its densest plane has magnitude:", opts: ["a/2", "a/√2", "a√2", "a√3", "none"], ans: 2 },
+        { q: "What type of bonds are inherent in LiF and SiC, respectively?", opts: ["Ionic & ionic", "covalent & covalent", "Covalent & ionic", "ionic & Covalent", "van der Waals"], ans: 3 },
+        { q: "Given atomic mass 63.5 g/mol, density 8.96 g/cm³, determine atomic radius of copper (FCC). approx?", opts: ["0.128 nm", "0.256 nm", "0.362 nm", "0.052 nm", "0.427 nm"], ans: 0 },
+        { q: "Which of the following bonds is directional in solids?", opts: ["metallic bond", "ionic bond", "covalent bond", "hydrogen bond", "none"], ans: 2 },
+        { q: "Which of the following properties is structure insensitive?", opts: ["Tensile strength", "Hardness", "Yield strength", "refractive index", "Young modulus"], ans: 3 },
+        { q: "All the following descriptions are true except?", opts: ["All primitive cells are unit cells", "All unit cells are not necessarily primitive", "FCC and HCP have same APF", "Number of atoms in HCP lattice is thrice that of FCC", "none"], ans: 3 },
+        { q: "Creep test of metal is significant at:", opts: ["room temperature", "melting temperature", "cryogenic temperature", "elevated temperature", "isothermal temperature"], ans: 3 },
+        { q: "Given Brinell hardness number 300, what is approximate tensile strength (MPa)? (TS≈3.45×HB)", opts: ["1035 MPa", "735 MPa", "435 MPa", "2235 MPa", "2050 MPa"], ans: 0 },
+        { q: "Concrete is a:", opts: ["polymer-matrix composite", "ceramic-matrix composite", "metal-matrix composite", "all of the above", "none"], ans: 1 },
+        { q: "Thermal shock resistance of ceramics is more pronounced in presence of ——— stress", opts: ["Torsional", "Compressive", "Tensile", "Cyclic", "Bending"], ans: 2 },
+        { q: "Glass is considered to be:", opts: ["liquid", "solid", "viscous", "super cooled liquid", "polymorphic"], ans: 3 },
+        { q: "What structure does glass have?", opts: ["base-centred", "crystal", "amorphous", "polymorphic", "all of the above"], ans: 2 },
+        { q: "Heat resistant carbides have high melting temperatures due to their ——— strength", opts: ["bond", "tensile", "flexural", "creep", "yield"], ans: 0 },
+        { q: "The major undesirable property of wood is:", opts: ["shrinkage", "thermal expansion", "hygroscopic nature", "stress-strain behaviour", "none"], ans: 2 },
+        { q: "The impact strength of a material is an index of its:", opts: ["toughness", "tensile strength", "fatigue strength", "cold workability", "none"], ans: 0 },
+        { q: "Materials which exhibit the same elastic properties in all directions are called:", opts: ["homogeneous", "inelastic", "isotropic", "isentropic", "visco-elastic"], ans: 2 },
+        { q: "With the aid of typical stress-strain curve, which curve represents a ceramic material?", opts: ["Curve A (ductile)", "Curve B (steep, short)", "Curve C (elastomer)", "Curve D (polymer)", "Cannot determine"], ans: 1 },
+        { q: "—————— is not a property required for biomaterials:", opts: ["Biocompatibility", "Bioinertness", "Toxicity", "Bioactiveness", "Non‑inflammable"], ans: 2 },
+        { q: "Seasoning imparts all but one of the following to timber:", opts: ["Hardness", "Toughness", "Stiffness", "Strength", "All of the above"], ans: 4 },
+        { q: "One of the following is not a method of artificial seasoning of timber:", opts: ["Boiling", "Air seasoning", "Water seasoning", "Chemical seasoning", "None of the above"], ans: 1 },
+        { q: "For intrinsic silicon, σ=4×10⁻⁴ S/m, μe=0.14, μh=0.05 m²/V·s. Compute electron/hole concentration.", opts: ["1.32×10¹⁶ m⁻³", "2.5×10¹⁶ m⁻³", "1.0×10¹⁶", "8×10¹⁵", "none"], ans: 0 },
+        { q: "Fatigue strength is the ——— for which fatigue will not occur within a particular number of cycles:", opts: ["minimum stress", "maximum stress", "minimum strain", "maximum strain", "parallel strain"], ans: 1 },
+        { q: "Basic properties of materials frequently define the capabilities, potential, reliability and limitations of technology.", opts: ["Not exactly", "Not sure", "False", "True"], ans: 3 },
+        { q: "In determining moisture content of timber, all EXCEPT one is true: (last two consecutive weight observations …)", opts: ["sample dimension 20x20x20 mm", "last two weight observations identical", "test piece weighed fresh", "last two weight observations differ by 0.1%", "none"], ans: 3 },
+        { q: "The slip system of a crystal lattice is defined by:", opts: ["densest plane & least dense direction", "densest plane & denser direction", "densest direction & less dense plane", "densest plane & densest direction", "none"], ans: 3 },
+        { q: "Wood is described as orthotropic. This means:", opts: ["wide in tropics", "orthopaedic application", "orthorhombic crystal", "unique independent mechanical properties in three orthogonal directions"], ans: 3 },
+        { q: "Copper is not appropriate for high tension transmission lines due to its:", opts: ["low cost", "high ductility", "density", "toxicity", "none"], ans: 2 },
+        { q: "Correct order of bonds in terms of increasing electrical resistivity:", opts: ["metallic > covalent > ionic", "metallic < covalent < ionic", "ionic < covalent < metallic", "covalent > ionic > metallic", "none"], ans: 1 },
+        { q: "Which is NOT a factor affecting electron mobility?", opts: ["thermal agitation", "crystal imperfections", "crystal structure", "degree of cold work", "all of the above"], ans: 4 },
+        { q: "In iron‑carbon diagram, the eutectoid reaction occurs at:", opts: ["1147°C", "1492°C", "723°C", "910°C", "1539°C"], ans: 2 },
+        { q: "Which process introduces both carbon and nitrogen into steel surface?", opts: ["Carburizing", "Nitriding", "Carbonitriding", "Cyaniding", "Boriding"], ans: 2 },
+        { q: "Which surface hardening method uses an ionized gas plasma?", opts: ["flame hardening", "induction hardening", "plasma nitriding", "laser hardening", "TD process"], ans: 2 },
+        { q: "The main purpose of tempering hardened steel is:", opts: ["increase hardness", "relieve stresses & restore toughness", "refine grain size", "decarburize surface", "spheroidize"], ans: 1 },
+        { q: "Viscosity of glass forming melt near softening point is about:", opts: ["10⁴ poise", "10⁷·6 poise", "10¹³ poise", "10² poise", "10⁻² poise"], ans: 2 },
+        { q: "In adhesive bonding, optimal wetting occurs when contact angle α:", opts: ["< 10°", "< 30°", "> 90°", "= 60°", "any angle"], ans: 1 },
+        { q: "Which joining process uses a filler metal with melting point <450°C?", opts: ["brazing", "soldering", "welding", "adhesive", "riveting"], ans: 1 },
+        { q: "Recalescence in steel is caused by:", opts: ["release of latent heat during gamma→alpha", "surface oxidation", "decarburization", "grain growth", "cracking"], ans: 0 },
+        { q: "Full annealing of hypoeutectoid steel requires heating to:", opts: ["Ac₁ + 30‑50°C", "Ac₃ + 30‑50°C", "Acm + 30‑50°C", "below Ac₁", "any temperature"], ans: 1 },
+        { q: "Martensite in steel is characterized by:", opts: ["BCT structure, very hard", "FCC, soft", "BCC, ductile", "HCP, brittle", "amorphous"], ans: 0 },
+        { q: "The main microstructural constituent of spheroidized steel:", opts: ["lamellar pearlite", "spherical carbides in ferrite", "acicular ferrite", "bainite", "ledeburite"], ans: 1 },
+        { q: "A material with high thermal shock resistance should have:", opts: ["low thermal conductivity", "high expansion", "low fracture strength", "low Young’s modulus", "high brittleness"], ans: 3 },
+        { q: "Which of the following is a bioinert ceramic?", opts: ["hydroxyapatite", "alumina", "tricalcium phosphate", "bioglass", "collagen"], ans: 1 },
+        { q: "Stress corrosion cracking requires:", opts: ["tensile stress + corrosive environment", "only compressive stress", "static load only", "vacuum", "high temperature only"], ans: 0 },
+        { q: "The major charge carrier in conductive polymers is:", opts: ["electrons only", "holes only", "polarons / bipolarons", "ions", "protons"], ans: 2 },
+        { q: "Which of the following is a temporary joining process?", opts: ["riveting", "welding", "brazing", "soldering", "fusion welding"], ans: 0 },
+        { q: "The most widely used method for carburizing today is:", opts: ["pack carburizing", "liquid carburizing", "gas carburizing", "vacuum carburizing", "ion carburizing"], ans: 2 },
+        { q: "In powder metallurgy, the step 'sintering' does what?", opts: ["compacts powder", "bonds particles by diffusion", "melts the metal", "removes lubricant", "coats particles"], ans: 1 },
+        { q: "Tungsten inert gas (TIG) welding uses electrode made of:", opts: ["consumable steel", "non-consumable tungsten", "copper", "graphite", "aluminum"], ans: 1 },
+        { q: "Hardness of boride layer on steel can reach:", opts: ["300 HV", "700 HV", "1500‑2100 HV", "4000 HV", "<200 HV"], ans: 2 },
+        { q: "Which polymer is an example of thermoplastic?", opts: ["phenolic", "epoxy", "polyethylene", "polyurethane (thermoset)", "melamine"], ans: 2 },
+        { q: "Ceramics generally fail by:", opts: ["ductile fracture", "brittle fracture", "fatigue", "creep at room temperature", "yielding"], ans: 1 },
+        { q: "Poisson's ratio for most metals lies between:", opts: ["0.1‑0.2", "0.25‑0.35", "0.45‑0.5", "0.5‑0.7", "negative"], ans: 1 },
+        { q: "The atomic packing factor for BCC structure is:", opts: ["0.74", "0.68", "0.52", "0.38", "0.86"], ans: 1 },
+        { q: "Fick's first law deals with:", opts: ["steady-state diffusion", "non-steady diffusion", "thermal conduction", "viscosity", "electrical mobility"], ans: 0 },
+        { q: "Which of the following is not a ceramic?", opts: ["Al₂O₃", "SiC", "ZrO₂", "PMMA", "Si₃N₄"], ans: 3 },
+        { q: "Ion nitriding is also known as:", opts: ["gas nitriding", "plasma nitriding", "salt bath nitriding", "cyaniding", "carbonitriding"], ans: 1 },
+        { q: "The main alloying element in 'duralumin' is:", opts: ["zinc", "copper", "magnesium", "silicon", "manganese"], ans: 1 },
+        { q: "Which mechanical property is most structure‑sensitive?", opts: ["yield strength", "elastic modulus", "density", "melting point", "coefficient of expansion"], ans: 0 },
+        { q: "A material with high dielectric constant is used in:", opts: ["capacitors", "resistors", "inductors", "transistors", "superconductors"], ans: 0 },
+        { q: "TD process (Toyota Diffusion) diffuses which element?", opts: ["carbon", "nitrogen", "vanadium/niobium", "chromium", "boron"], ans: 2 },
+        { q: "Copper and gold appear colored because:", opts: ["they absorb UV", "reflectivity varies with visible wavelength", "they are semiconductors", "thin oxide film", "alloy"], ans: 1 },
+        { q: "Which defect is characteristic of ionic crystals?", opts: ["Schottky defect", "vacancy cluster", "interstitial loop", "screw dislocation", "edge dislocation"], ans: 0 },
+        { q: "A polymer with cross-linked structure is:", opts: ["thermoplastic", "thermoset", "elastomer always", "crystalline", "amorphous thermoplastic"], ans: 1 },
+        { q: "Tempering of martensite at ~150‑200°C produces:", opts: ["tempered martensite (ε‑carbide)", "spheroidite", "pearlite", "bainite", "retained austenite"], ans: 0 },
+        { q: "The major component of ordinary Portland cement is:", opts: ["tricalcium silicate", "dicalcium silicate", "tricalcium aluminate", "gypsum", "ferrite"], ans: 0 },
+        { q: "The main function of aggregate in concrete is:", opts: ["binding", "filler & strength", "react with cement", "color", "waterproof"], ans: 1 },
+        { q: "Hygroscopic nature of wood means it:", opts: ["absorbs/desorbs moisture", "burns easily", "resists fungi", "has high density", "sinks in water"], ans: 0 },
+        { q: "Which of the following is NOT a welding terminology?", opts: ["crater", "toe", "fillet", "bead", "machining allowance"], ans: 4 },
+        { q: "In brazing, the filler metal melting point is:", opts: ["<450°C", ">450°C but < base metal Tm", "> base metal Tm", "same as base", ">1000°C"], ans: 1 },
+        { q: "Galvanic corrosion occurs when:", opts: ["two dissimilar metals in electrolyte", "stress + corrosion", "uniform oxidation", "cavitation", "hydrogen embrittlement"], ans: 0 },
+        { q: "Superconductivity in ceramics was first observed in:", opts: ["YBCO", "NbO and NbN", "BSCCO", "MgB₂", "LSCO"], ans: 1 },
+        { q: "The slope of stress-strain curve in elastic region is:", opts: ["yield strength", "tensile strength", "Young's modulus", "toughness", "resilience"], ans: 2 },
+        { q: "Which material has the highest thermal conductivity?", opts: ["silver", "copper", "diamond", "aluminum", "graphene (but diamond at RT)"], ans: 2 },
+        { q: "The main cause of reflection from metal surface is:", opts: ["re-emission of absorbed photons", "band gap", "surface roughness", "plasma frequency", "impurities"], ans: 0 },
+        { q: "In fatigue, the endurance limit is:", opts: ["stress below which no failure", "maximum stress", "strain limit", "number of cycles to failure", "none"], ans: 0 },
+        { q: "An example of soft ferrite is:", opts: ["barium ferrite", "magnetite", "manganese‑zinc ferrite", "strontium ferrite", "lodestone"], ans: 2 },
+        { q: "For an adhesive joint, cohesion failure occurs within:", opts: ["adhesive layer", "interface", "adherent", "oxide layer", "primer"], ans: 0 },
+        { q: "Which process uses 'spelter' as filler?", opts: ["brazing", "soldering", "welding", "adhesive bonding", "riveting"], ans: 0 },
+        { q: "The 'heat affected zone' in welding is:", opts: ["region of base metal with altered microstructure", "molten pool", "weld bead", "fusion zone", "crater"], ans: 0 },
+        { q: "In glass, the network former is typically:", opts: ["Na₂O", "CaO", "SiO₂", "MgO", "K₂O"], ans: 2 },
+        { q: "The main purpose of normalizing steel is:", opts: ["softening", "grain refinement", "surface hardening", "decarburization", "spheroidization"], ans: 1 },
+        { q: "A material with high 'Q' (quality factor) has low:", opts: ["internal friction", "stiffness", "density", "strength", "melting point"], ans: 0 },
+        { q: "Which test is commonly used for ceramics due to brittleness?", opts: ["tensile test", "bend test", "torsion test", "impact test", "creep test"], ans: 1 },
+        { q: "The 'slip system' in FCC is:", opts: ["{111}<110>", "{110}<111>", "{100}<110>", "{111}<112>", "none"], ans: 0 },
+        { q: "Solid solution hardening is due to:", opts: ["lattice strain from solute atoms", "precipitates", "grain boundaries", "dislocation density", "texture"], ans: 0 },
+        { q: "Which joining method uses a non‑metallic substance that hardens?", opts: ["rivet", "screw", "adhesive bonding", "brazing", "welding"], ans: 2 },
     ];
-    // state
-    let current = 0;
-    let answers = new Array(questions.length).fill(null);
-    let secondsLeft = 45 * 60;
-    let timerInterval = null;
-    let submitted = false;
+    const finalQ = questions.slice(0, 100); 
 
-    // DOM elements
+    // state
+    let currentIndex = 0;
+    let answers = new Array(finalQ.length).fill(null);
+    let timerInterval = null;
+    let secondsLeft = 45 * 60;
+    let quizSubmitted = false;
+
     const qArea = document.getElementById('questionArea');
     const qCounter = document.getElementById('qCounter');
-    const timerBox = document.getElementById('timerDisplay');
+    const timerDisplay = document.getElementById('timerDisplay');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const submitBtn = document.getElementById('submitBtn');
-    const badgesDiv = document.getElementById('progressBadges');
-    const carouselLeft = document.getElementById('carouselLeft');
-    const carouselRight = document.getElementById('carouselRight');
-    const badgeCarousel = document.getElementById('badgeCarousel');
+    const answeredSpan = document.getElementById('answeredCount');
+    const badgeScroll = document.getElementById('badgeScrollContainer');
+    const leftArrow = document.getElementById('scrollLeftArrow');
+    const rightArrow = document.getElementById('scrollRightArrow');
 
-    function formatTime(s) {
-        let m = Math.floor(s / 60);
-        let sec = s % 60;
-        return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return `${m}:${s < 10 ? '0' : ''}${s}`;
     }
-    function updateTimer() { timerBox.innerText = formatTime(secondsLeft); }
+    function updateTimerDisplay() { timerDisplay.innerText = formatTime(secondsLeft); }
 
     function startTimer() {
         if (timerInterval) clearInterval(timerInterval);
         timerInterval = setInterval(() => {
-            if (submitted) return;
+            if (quizSubmitted) return;
             secondsLeft--;
-            updateTimer();
-            if (secondsLeft <= 0) { clearInterval(timerInterval); alert('Time out!'); submitQuiz(); }
+            updateTimerDisplay();
+            if (secondsLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('⏰ Time is up! Auto-submitting.');
+                submitQuiz();
+            }
         }, 1000);
     }
 
-    function scrollBadgeIntoView(index) {
-        const badges = document.querySelectorAll('.q-badge');
-        if (badges.length && badgeCarousel) {
-            const target = badges[index];
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
-        }
-    }
+    // render main card
+    function render() {
+        if (quizSubmitted) return;
+        const q = finalQ[currentIndex];
+        const selectedIdx = answers[currentIndex];
 
-    function renderQuestion() {
-        if (submitted) return;
-        const q = questions[current];
-        let html = `<div class="q-text">Q${current+1}. ${q.q}</div><div class="options-grid">`;
-        q.opts.forEach((opt, i) => {
-            let letter = String.fromCharCode(65 + i);
-            let sel = answers[current] === i ? 'selected' : '';
-            html += `<div class="option ${sel}" data-opt-index="${i}"><span class="option-letter">${letter}.</span> ${opt}</div>`;
+        let html = `<div class="question-card"><div class="q-text">Q${currentIndex+1}. ${q.q}</div><div class="options-grid">`;
+        q.opts.forEach((opt, idx) => {
+            const letter = String.fromCharCode(65 + idx);
+            const selClass = (selectedIdx === idx) ? 'selected' : '';
+            html += `<div class="option ${selClass}" data-opt-index="${idx}"><span class="option-letter">${letter}.</span> ${opt}</div>`;
         });
-        html += '</div>';
+        html += '</div></div>';
         qArea.innerHTML = html;
-        document.querySelectorAll('.option').forEach(el => {
-            el.addEventListener('click', () => {
-                if (submitted) return;
-                let idx = parseInt(el.dataset.optIndex);
-                answers[current] = idx;
-                renderQuestion();
-                updateBadges();
+
+        document.querySelectorAll('.option').forEach(optDiv => {
+            optDiv.addEventListener('click', () => {
+                if (quizSubmitted) return;
+                const idx = parseInt(optDiv.dataset.optIndex);
+                answers[currentIndex] = idx;
+                render();
+                updateBadgesAndCount();
             });
         });
-        qCounter.innerText = `Q${current+1}/${questions.length}`;
-        prevBtn.disabled = current === 0;
-        nextBtn.disabled = current === questions.length-1;
-        updateBadges();
-        scrollBadgeIntoView(current);
+
+        qCounter.innerText = `Q ${currentIndex+1} / ${finalQ.length}`;
+        prevBtn.disabled = (currentIndex === 0);
+        nextBtn.disabled = (currentIndex === finalQ.length-1);
+        updateBadgesAndCount();
     }
 
-    function updateBadges() {
-        let answered = answers.filter(a => a !== null).length;
-        let html = '';
-        questions.forEach((_, i) => {
+    // update badges + count + carousel
+    function updateBadgesAndCount() {
+        const answered = answers.filter(a => a !== null).length;
+        answeredSpan.innerText = answered;
+
+        let badgesHtml = '';
+        finalQ.forEach((_, idx) => {
             let cls = 'q-badge';
-            if (i === current) cls += ' active';
-            if (answers[i] !== null) cls += ' answered';
-            html += `<div class="${cls}" data-badge-index="${i}">${i+1}</div>`;
+            if (idx === currentIndex) cls += ' active';
+            if (answers[idx] !== null) cls += ' answered';
+            badgesHtml += `<div class="${cls}" data-badge-index="${idx}">${idx+1}</div>`;
         });
-        badgesDiv.innerHTML = html;
+        badgeScroll.innerHTML = badgesHtml;
+
+        // badge click
         document.querySelectorAll('.q-badge').forEach(b => {
-            b.addEventListener('click', (e) => {
-                if (submitted) return;
-                let idx = parseInt(b.dataset.badgeIndex);
-                if (!isNaN(idx)) { current = idx; renderQuestion(); }
+            b.addEventListener('click', () => {
+                if (quizSubmitted) return;
+                const idx = parseInt(b.dataset.badgeIndex);
+                if (!isNaN(idx) && idx >= 0 && idx < finalQ.length) {
+                    currentIndex = idx;
+                    render();
+                    // optional: center badge in scroll
+                    b.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
             });
         });
-        // update arrow disabled state (optional, but good)
-        // left/right scroll amounts handled by click
     }
 
-    // carousel arrow clicks
-    carouselLeft.addEventListener('click', () => {
-        if (badgeCarousel) {
-            badgeCarousel.scrollBy({ left: -200, behavior: 'smooth' });
-        }
+    // carousel arrows: scroll left/right
+    leftArrow.addEventListener('click', () => {
+        badgeScroll.scrollBy({ left: -120, behavior: 'smooth' });
     });
-    carouselRight.addEventListener('click', () => {
-        if (badgeCarousel) {
-            badgeCarousel.scrollBy({ left: 200, behavior: 'smooth' });
-        }
+    rightArrow.addEventListener('click', () => {
+        badgeScroll.scrollBy({ left: 120, behavior: 'smooth' });
+    });
+
+    // nav
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) { currentIndex--; render(); }
+    });
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex < finalQ.length-1) { currentIndex++; render(); }
     });
 
     function submitQuiz() {
-        if (submitted) return;
-        submitted = true; clearInterval(timerInterval);
+        if (quizSubmitted) return;
+        quizSubmitted = true;
+        clearInterval(timerInterval);
+        const answeredCount = answers.filter(a => a !== null).length;
         let correct = 0;
-        questions.forEach((q, i) => { if (answers[i] !== null && answers[i] === q.ans) correct++; });
-        let perc = Math.round((correct/questions.length)*100);
-        let sumHtml = `<div class="summary-screen"><h2>✅ score: ${correct}/${questions.length} (${perc}%)</h2>
-            <div class="score-circle">${correct}</div><div class="review-grid">`;
-        questions.forEach((q,i) => {
-            let u = answers[i]!==null ? String.fromCharCode(65+answers[i]) : '—';
-            let c = String.fromCharCode(65+q.ans);
-            sumHtml += `<div class="review-item">Q${i+1}: ${u}/${c} ${answers[i]===q.ans?'✅':'❌'}</div>`;
+        finalQ.forEach((q, i) => {
+            if (answers[i] !== null && answers[i] === q.ans) correct++;
         });
-        sumHtml += '</div><button id="restartBtn" class="primary" style="margin-top:1.5rem;">↻ Restart</button></div>';
-        qArea.innerHTML = sumHtml;
-        document.getElementById('restartBtn')?.addEventListener('click', ()=>location.reload());
-        document.querySelector('.nav-row').style.display = 'none';
-        document.querySelector('.carousel-wrapper').style.display = 'none';
+        const scorePercent = Math.round((correct / finalQ.length)*100);
+        let summaryHtml = `<div class="summary-screen"><h2>✅ Quiz completed</h2>
+            <div class="score-circle">${correct}</div>
+            <p style="font-size:1.5rem; margin:0.5rem 0 2rem">${correct}/${finalQ.length} · ${scorePercent}%</p>
+            <h3>Quick review (your answer / correct)</h3><div class="review-grid">`;
+        finalQ.forEach((q, i) => {
+            const user = answers[i] !== null ? String.fromCharCode(65+answers[i]) : '—';
+            const correctLetter = String.fromCharCode(65+q.ans);
+            const ok = (answers[i] === q.ans) ? '✅' : '❌';
+            summaryHtml += `<div class="review-item">Q${i+1}: ${user} / ${correctLetter} ${ok}</div>`;
+        });
+        summaryHtml += '</div><button id="restartBtn" class="primary" style="margin:2rem auto 0; background:#2563eb;">↻ Restart quiz</button></div>';
+        qArea.innerHTML = summaryHtml;
+        document.getElementById('navButtons').style.display = 'none';
+        document.querySelector('.progress-carousel').style.display = 'none';
+        document.querySelector('.footer-info').innerHTML = `<span>Final score: ${correct}/100 · ${scorePercent}%</span><span>⏱️ finished</span>`;
+        document.getElementById('restartBtn')?.addEventListener('click', () => window.location.reload());
     }
 
-    // event listeners
-    prevBtn.addEventListener('click', ()=>{ if(current>0){current--; renderQuestion();} });
-    nextBtn.addEventListener('click', ()=>{ if(current<questions.length-1){current++; renderQuestion();} });
-    submitBtn.addEventListener('click', ()=>{ if(confirm('Submit quiz?')) submitQuiz(); });
+    submitBtn.addEventListener('click', () => {
+        if (confirm('Submit quiz and see results?')) submitQuiz();
+    });
 
-    // init
-    renderQuestion();
-    startTimer();
+    function init() {
+        render();
+        startTimer();
+    }
+    init();
 })();
 </script>
 </body>
 </html>
-```
